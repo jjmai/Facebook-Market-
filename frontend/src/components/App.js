@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 
 import Dummy from './Dummy';
+import Home from './Home';
+// import Drawer from './style/Drawer';
 
 /**
  * Simple component with no state.
@@ -9,7 +11,10 @@ import Dummy from './Dummy';
  */
 function App() {
   return (
-    <Dummy />
+    <Fragment>
+      <Home />
+      <Dummy />
+    </Fragment>
   );
 }
 
