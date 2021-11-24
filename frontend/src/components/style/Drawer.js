@@ -45,6 +45,11 @@ function ResponsiveDrawer(props) {
           <Typography variant="h6" noWrap component="div">
             Facebook
           </Typography>
+          <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          style={{margin: 'auto'}}>Login </IconButton>
         </Toolbar>
       </AppBar>
       <Box
