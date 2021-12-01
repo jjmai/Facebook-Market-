@@ -2,6 +2,7 @@ import React from 'react';
 import Drawer from './style/Drawer';
 import ImageList from './style/ImageList';
 import SearchBar from './style/Search';
+import Categories from './style/Categories';
 
 const Navbar = () => {
   // const { window } = props;
@@ -11,11 +12,14 @@ const Navbar = () => {
   // setMobileOpen(!mobileOpen);
   // };
   return (
-    <span>
-      <Drawer />
-      <SearchBar />
-      <ImageList />
-    </span>
+    <div>
+      <span>
+        <Drawer />
+        <SearchBar />
+        <Categories />
+        <ImageList />
+      </span>
+    </div>
   );
 };
 
