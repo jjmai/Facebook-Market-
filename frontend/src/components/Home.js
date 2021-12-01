@@ -1,6 +1,7 @@
 import React from 'react';
 import Drawer from './style/Drawer';
 import ImageList from './style/ImageList';
+import SearchBar from './style/Search';
 
 const Navbar = () => {
   // const { window } = props;
@@ -12,6 +13,7 @@ const Navbar = () => {
   return (
     <span>
       <Drawer />
+      <SearchBar />
       <ImageList />
     </span>
   );
