@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom';
 // import Dummy from './Dummy';
 import Home from './Home';
 import Login from './Login';
+import CreateAccount from './CreateAccount';
 // import Drawer from './style/Drawer';
 
 /**
@@ -21,6 +22,9 @@ function App() {
           </Route>
           <Route path="/login">
             <Login/>
+          </Route>
+          <Route path="/createAccount">
+            <CreateAccount/>
           </Route>
         </Switch>
       </BrowserRouter>

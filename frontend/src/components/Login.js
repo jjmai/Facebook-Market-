@@ -1,5 +1,40 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
+import styled from '@emotion/styled';
+import {Button, TextField} from '@mui/material';
+
+const LoginTitle = styled.h2({
+  textAlign: 'center',
+  color: '#1a77f2',
+});
+
+const ForgetPassword = styled.div({
+  textAlign: 'center',
+  color: '#1a77f2',
+  margin: '20px 30px',
+});
+
+const Division = styled.div({
+  position: 'relative',
+  width: '100%',
+  height: 1,
+  backgroundColor: '#e1e1e1',
+  marginBottom: 30,
+});
+
+const DivisionText = styled.div({
+  position: 'absolute',
+  left: '50%',
+  top: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 50,
+  textAlign: 'center',
+  backgroundColor: '#ffffff',
+});
+
+const CustomButton = styled(Button)({
+  textTransform: 'initial',
+});
 
 /**
  * @return {object}
@@ -17,8 +52,7 @@ function Login() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    // uncomment the rest when backend is implemented
-    /* fetch('/authenticate', {
+    fetch('/v0/users/authenticate', {
       method: 'POST',
       body: JSON.stringify(user),
       headers: {
@@ -33,35 +67,63 @@ function Login() {
       })
       .then((json) => {
         localStorage.setItem('user', JSON.stringify(json));
-        */
-    history.push('/');
-    /*
+        history.push('/');
       })
       .catch((err) => {
         console.log(err);
         alert('Error logging in, please try again');
-      });*/
+      });
+  };
+
+  const toCreateAccount = () => {
+    history.push('/createAccount');
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <h2 id='welcome'>Facebook Account Login</h2>
-      <input
-        type="email"
-        name="email"
-        placeholder="EMail"
-        onChange={handleInputChange}
-        required
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        onChange={handleInputChange}
-        required
-      />
-      <input type="submit" value="Submit"/>
-    </form>
+    <>
+      <LoginTitle>Facebook</LoginTitle>
+      <form onSubmit={onSubmit}>
+        <TextField
+          fullWidth
+          label="Email"
+          type="email"
+          name="email"
+          variant="outlined"
+          onChange={handleInputChange}
+        />
+        <TextField
+          style={{marginTop: 10, marginBottom: 15}}
+          fullWidth
+          label="Password"
+          type="password"
+          name="password"
+          variant="outlined"
+          onChange={handleInputChange}
+        />
+        <CustomButton
+          fullWidth
+          type="submit"
+          variant="contained"
+          color="primary"
+          disableElevation>
+          Log In
+        </CustomButton>
+        <ForgetPassword>Forgot password?</ForgetPassword>
+        <Division>
+          <DivisionText>or</DivisionText>
+        </Division>
+        <div style={{textAlign: 'center'}}>
+          <CustomButton
+            variant="contained"
+            color="success"
+            disableElevation
+            disableRipple
+            onClick={toCreateAccount}>
+            Create new account
+          </CustomButton>
+        </div>
+      </form>
+    </>
   );
 }
 

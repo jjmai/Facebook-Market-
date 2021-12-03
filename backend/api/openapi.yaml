@@ -30,6 +30,77 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
+  /users:
+    post:
+      description: Create a new user
+      tags:
+        - User
+      requestBody:
+        description: User to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUser'
+      responses:
+        200:
+          description: Create user successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        400:
+          description: Unexpected properties
+        407:
+          description: Duplicate email
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /users/authenticate:
+    post:
+      description: Authenticate user
+      tags:
+        - User
+      requestBody:
+        description: User to authenticate
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  description: The email of the user to be registered.
+                  type: string
+                  format: email
+                password:
+                  description: The password address of the user to be registered.
+                  type: string
+      responses:
+        200:
+          description: Authenticate successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserWithoutPassword'
+        404:
+          description: Invalid email or password
+        407:
+          description: Duplicate email
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
 components:
   schemas:
     Error:
@@ -49,3 +120,42 @@ components:
           type: string
       required:
         - message
+
+    CreateUser:
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+        - name
+        - email
+        - password
+
+    User:
+      allOf:
+        - $ref: '#/components/schemas/CreateUser'
+        - type: object
+          description: JSON defining a User object
+          required:
+            - id
+          properties:
+            id:
+              type: number
+
+    UserWithoutPassword:
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+        - id
+        - name
+        - email
