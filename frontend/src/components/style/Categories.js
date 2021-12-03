@@ -9,11 +9,27 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import Drawer from '@mui/material/Drawer';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import HouseIcon from '@mui/icons-material/House';
+import CheckroomIcon from '@mui/icons-material/Checkroom';
+import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+import VideocamIcon from '@mui/icons-material/Videocam';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import YardIcon from '@mui/icons-material/Yard';
+import SportsBasketballIcon from '@mui/icons-material/SportsBasketball';
+import WarehouseIcon from '@mui/icons-material/Warehouse';
+import BuildIcon from '@mui/icons-material/Build';
+import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
+import MusicNoteIcon from '@mui/icons-material/MusicNote';
 
 const drawerWidth = 240;
+const iconArray =[<DirectionsCarIcon />, <HouseIcon />, <CheckroomIcon />,
+  <LocalGasStationIcon />, <PhoneAndroidIcon />, <VideocamIcon/>,
+  <FavoriteIcon/>, <LocalOfferIcon />, <YardIcon/>, <SportsBasketballIcon/>,
+  <WarehouseIcon/>, <BuildIcon/>, <MapsHomeWorkIcon/>, <MusicNoteIcon/>];
 
 const DrawerHeader = styled('div')(({theme}) => ({
   display: 'flex',
@@ -32,6 +48,8 @@ const DrawerHeader = styled('div')(({theme}) => ({
 export default function PersistentDrawerRight() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [display, setDisplay] = React.useState(false);
+  const [label, setLabel] = React.useState('');
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -39,6 +57,17 @@ export default function PersistentDrawerRight() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const displayCategory = (text) => {
+    setDisplay(true);
+    setLabel(text);
+  };
+
+  const styleText ={
+    fontSize: '30px',
+    margin: 'auto',
+    width: '0%',
   };
 
   return (
@@ -53,6 +82,7 @@ export default function PersistentDrawerRight() {
       > All Categories
         <MenuIcon />
       </IconButton>
+      {display == true? <div style ={styleText}>{label}</div> : null}
       <Drawer
         sx={{
           'width': drawerWidth,
@@ -74,10 +104,13 @@ export default function PersistentDrawerRight() {
         <Divider />
         <List>
           {['Vehicles', 'Apparel', 'Property Rentals',
-            'Electronics'].map((text, index) => (
-            <ListItem button key={text}>
+            'Electronics', 'Classifieds', 'Entertainment', 'Family',
+            'Free Stuff', 'Garden & Outdoor', 'Hobbies', 'Home Goods',
+            'Home Improvement Supplies', 'Home Sales', 'Musical Instruments',
+          ].map((text, index) => (
+            <ListItem button key={text} onClick={() => displayCategory(text)}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {iconArray[index]}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
