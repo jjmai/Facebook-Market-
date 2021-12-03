@@ -46,10 +46,11 @@ function ResponsiveDrawer(props) {
             Facebook
           </Typography>
           <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          style={{margin: 'auto'}}>Login </IconButton>
+            href='/Login'
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            style={{margin: 'auto'}}>Login </IconButton>
         </Toolbar>
       </AppBar>
       <Box

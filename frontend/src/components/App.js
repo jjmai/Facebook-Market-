@@ -1,7 +1,9 @@
 import React, {Fragment} from 'react';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
-import Dummy from './Dummy';
+// import Dummy from './Dummy';
 import Home from './Home';
+import Login from './Login';
 // import Drawer from './style/Drawer';
 
 /**
@@ -12,8 +14,16 @@ import Home from './Home';
 function App() {
   return (
     <Fragment>
-      <Home />
-      <Dummy />
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact>
+            <Home/>
+          </Route>
+          <Route path="/login">
+            <Login/>
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </Fragment>
   );
 }

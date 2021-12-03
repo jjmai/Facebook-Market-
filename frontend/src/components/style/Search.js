@@ -53,7 +53,7 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
  */
 export default function SearchBar() {
   return (
-    <Search>
+    <Search >
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>

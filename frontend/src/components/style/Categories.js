@@ -74,7 +74,7 @@ export default function PersistentDrawerRight() {
         <Divider />
         <List>
           {['Vehicles', 'Apparel', 'Property Rentals',
-          'Electronics'].map((text, index) => (
+            'Electronics'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -84,16 +84,6 @@ export default function PersistentDrawerRight() {
           ))}
         </List>
         <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
       </Drawer>
     </span>
 
