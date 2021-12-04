@@ -12,8 +12,18 @@ const pool = new Pool({
 });
 
 router.get('/', async (req, res, next) => {
-  const result = await pool.query('SELECT * FROM categories');
+  const result = await pool.query('SELECT * FROM categories where parent_id is null');
   res.json(result.rows);
+});
+
+router.get('/subCategories', async(req, res, next) => {
+  const {categoryId} = req.query;
+  if (categoryId) {
+    const result = await pool.query('SELECT * FROM categories where parent_id = $1', [categoryId]);
+    res.json(result.rows);
+  } else {
+    res.status(404).send();
+  }
 });
 
 module.exports = router;

@@ -27,10 +27,14 @@ import BuildIcon from '@mui/icons-material/Build';
 import MapsHomeWorkIcon from '@mui/icons-material/MapsHomeWork';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import {styled as muiStyled} from '@mui/material/styles';
+import FmdGood from '@mui/icons-material/FmdGood';
+import ExpandCircleDownOutlinedIcon from
+'@mui/icons-material/ExpandCircleDownOutlined';
+import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
+import {Breadcrumbs, Typography} from '@mui/material';
 
 const SearchWrapper = styled.div`
   padding-bottom: 12px;
-  border-bottom: 1px solid #e1e1e1;
 `;
 
 const SearchCategory = styled.div`
@@ -68,6 +72,44 @@ const CustomInput = styled.input`
   background-color: transparent;
 `;
 
+const SearchOther = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 13px;
+  padding-top: 18px;
+  border-top: 1px solid #e1e1e1;
+`;
+
+const SearchOtherDistance = styled.div`
+  display: flex;
+  justify-content: center;
+  color: #1a77f2;
+`;
+
+const CategoryDropDown = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const SubCategoryWrapper = styled.div`
+  display: flex;
+  margin-bottom: 15px;
+  overflow-x: auto;
+`;
+
+const SearchOtherButton = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: #e7f3ff;
+  color: #1a77f2;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 15px;
+`;
+
 const iconArray =[<DirectionsCarIcon />, <HouseIcon />, <CheckroomIcon />,
   <LocalGasStationIcon />, <PhoneAndroidIcon />, <VideocamIcon/>,
   <FavoriteIcon/>, <LocalOfferIcon />, <YardIcon/>, <SportsBasketballIcon/>,
@@ -91,6 +133,8 @@ export default function SearchBar() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [categories, setCategories] = React.useState([]);
+  const [subCategories, setSubCategories] = React.useState([]);
+  const [currentCategory, setCurrentCategory] = React.useState();
 
   React.useEffect(() => {
     fetch('/v0/categories')
@@ -116,17 +160,84 @@ export default function SearchBar() {
     setOpen(false);
   };
 
+  const onCategorySelect = (category) => {
+    fetch(`/v0/categories/subCategories?categoryId=${category.id}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
+      .then((json) => {
+        setCurrentCategory(category);
+        setSubCategories(json);
+        setOpen(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <SearchWrapper>
-      <SearchCategory>
-        <SearchItem><Person /></SearchItem>
-        <SearchItem>Sell</SearchItem>
-        <SearchItem onClick={handleDrawerOpen}>All Categories</SearchItem>
-      </SearchCategory>
+      {
+        currentCategory ?
+          <div>
+            <Breadcrumbs sx={{fontSize: 14}} aria-label="breadcrumb">
+              <div>Marketplace</div>
+              <Typography color="text.primary">
+                {currentCategory.name}
+              </Typography>
+            </Breadcrumbs>
+            <CategoryDropDown onClick={handleDrawerOpen}>
+              <span style={{fontSize: 22, fontWeight: 'bold'}}>
+                {currentCategory.name}
+              </span>
+              <ExpandCircleDownOutlinedIcon
+                style={{fontSize: 20, marginLeft: 4}} />
+            </CategoryDropDown>
+            {
+              subCategories.length > 0 &&
+              <SubCategoryWrapper>
+                {
+                  subCategories.map((category) =>
+                    <SearchItem>{category.name}</SearchItem>)
+                }
+              </SubCategoryWrapper>
+            }
+          </div> :
+          <SearchCategory>
+            <SearchItem><Person /></SearchItem>
+            <SearchItem>Sell</SearchItem>
+            <SearchItem onClick={handleDrawerOpen}>All Categories</SearchItem>
+          </SearchCategory>
+      }
       <CustomInputWrapper>
         <Search />
         <CustomInput placeholder="Search Marketplace" />
       </CustomInputWrapper>
+      <SearchOther>
+        {
+          currentCategory ?
+            <div style={{display: 'flex'}}>
+              <SearchOtherButton style={{marginRight: 10}}>
+                <FmdGood style={{marginRight: 5}}/>
+                <span>Santa Cruz · 40 mi</span>
+              </SearchOtherButton>
+              <SearchOtherButton>
+                <FilterAltOutlinedIcon style={{marginRight: 5}}/>
+                <span>Filters</span>
+              </SearchOtherButton>
+            </div>:
+            <>
+              <h3 style={{margin: 0}}>Today's picks</h3>
+              <SearchOtherDistance>
+                <FmdGood />
+                <span>Santa Cruz · 40 mi</span>
+              </SearchOtherDistance>
+            </>
+        }
+      </SearchOther>
       <Drawer
         sx={{
           'width': 240,
@@ -148,7 +259,8 @@ export default function SearchBar() {
         <Divider />
         <List>
           {categories.map((category, index) => (
-            <ListItem button key={category.id}>
+            <ListItem button key={category.id}
+              onClick={() => onCategorySelect(category)}>
               <ListItemIcon>
                 {iconArray[index]}
               </ListItemIcon>

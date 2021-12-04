@@ -115,6 +115,27 @@ paths:
                 items:
                   $ref: '#/components/schemas/Category'
 
+  /categories/subCategories:
+    get:
+      description: Returns all sub categories
+      tags:
+        - Category
+      parameters:
+        - name: categoryId
+          in: query
+          description: the id of category
+          required: true
+          schema:
+            type: number
+      responses:
+        200:
+          description: Category Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Category'
+
   /listings:
     get:
       description: Returns all listings
