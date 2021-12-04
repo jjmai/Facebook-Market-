@@ -1,70 +1,87 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import styled from '@emotion/styled';
+import {Button} from '@mui/material';
 
-const drawerWidth = 240;
+const Bar = styled.div`
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 60px;
+  padding: 12px 16px;
+  background-color: #ffffff;
+  z-index: 999;
+`;
+
+const DrawerTitle = styled.h2`
+  color: #1a77f2;
+  margin: 0;
+`;
+
+const CustomButton = styled(Button)({
+  textTransform: 'initial',
+});
+
+const TopWrapper = styled.div`
+  background-color: #c7b3f7;
+  padding: 30px 20px;
+  margin-top: 60px;
+  width: 100%;
+`;
+
+const TopWrapperButton = styled(Button)`
+  text-transform: initial;
+  background-color: #ffffff;
+  color: rgba(0, 0, 0, 0.87);
+  &:hover {
+    background-color: #ffffff;
+  }
+`;
+
+const TopWrapperActions = styled.div`
+  display: flex;
+  margin-top: 20px;
+`;
+
 
 /**
  * @return {object} JSX Table
  * @param {object} props hello
  */
 function ResponsiveDrawer(props) {
-  // const {window} = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
   return (
-    <Box sx={{display: 'flex'}}>
+    <Box sx={{display: 'flex', flexDirection: 'column'}}>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={{
-          width: {sm: `${drawerWidth}px)`},
-          ml: {sm: `${drawerWidth}px`},
-        }}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{mr: 2, display: {sm: 'none'}}}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Facebook
-          </Typography>
-          <IconButton
-            href='/Login'
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            style={{margin: 'auto'}}>Login </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Box
-        component="nav"
-        sx={{width: {sm: drawerWidth}, flexShrink: {sm: 0}}}
-        aria-label="mailbox folders"
-      >
-      </Box>
-      <Box
-        component="main"
-        sx={{flexGrow: 1, p: 3, width: {sm: `calc(100% - ${drawerWidth}px)`}}}
-      >
-        <Toolbar />
-      </Box>
+      <Bar>
+        <DrawerTitle>facebook</DrawerTitle>
+        <CustomButton
+          href='/login'
+          variant="contained"
+          disableElevation>
+          Log in
+        </CustomButton>
+      </Bar>
+      <TopWrapper>
+        <h3 style={{margin: '0'}}>Buy and sell items locally or have
+          something new shipped from stores.</h3>
+        <div style={{fontSize: 14}}>
+          Login in to get the full Facebook Marketplace experience.
+        </div>
+        <TopWrapperActions>
+          <TopWrapperButton href='/login' variant="contained" disableElevation>
+            Log in
+          </TopWrapperButton>
+          <TopWrapperButton
+            style={{marginLeft: 12, flex: 1}}
+            variant="contained"
+            disableElevation>
+            Learn more
+          </TopWrapperButton>
+        </TopWrapperActions>
+      </TopWrapper>
     </Box>
   );
 }

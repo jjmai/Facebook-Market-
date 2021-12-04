@@ -2,23 +2,20 @@ import React from 'react';
 import Drawer from './style/Drawer';
 import ImageList from './style/ImageList';
 import SearchBar from './style/Search';
-import Categories from './style/Categories';
+import styled from '@emotion/styled';
+
+const HomeContent = styled.div`
+  padding: 12px 10px;
+`;
 
 const Navbar = () => {
-  // const { window } = props;
-  // const [mobileOpen, setMobileOpen] = React.useState(false);
-
-  // const handleDrawerToggle = () => {
-  // setMobileOpen(!mobileOpen);
-  // };
   return (
     <div>
-      <span>
-        <Drawer />
+      <Drawer />
+      <HomeContent>
         <SearchBar />
-        <Categories />
         <ImageList />
-      </span>
+      </HomeContent>
     </div>
   );
 };

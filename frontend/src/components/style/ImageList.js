@@ -31,15 +31,15 @@ export default function TitlebarImageList() {
   }, []);
 
   return (
-    <ImageList style={{margin: 'auto'}} sx={{width: 500, height: 450}}>
+    <ImageList style={{margin: 'auto'}}>
       <ImageListItem key="Subheader" cols={2}>
         <ListSubheader component="div">Listings</ListSubheader>
       </ImageListItem>
       {listings.map((listing) => (
-        <ImageListItem key={listing.id}>
+        <ImageListItem key={listing.listingId}>
           <img
-            src={`${listing.image_link}?w=248&fit=crop&auto=format`}
-            srcSet={`${listing.image_link}?w=248&fit=crop&auto=format&dpr=2 2x`}
+            src={`${listing.image_link}`}
+            srcSet={`${listing.image_link}`}
             alt={listing.text}
             loading="lazy"
           />

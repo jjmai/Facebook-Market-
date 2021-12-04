@@ -12,7 +12,9 @@ const pool = new Pool({
 });
 
 router.get('/', async (req, res, next) => {
-  const result = await pool.query('SELECT * FROM listings');
+  const { categoryId } = req.query;
+
+  const result = await pool.query('SELECT * FROM listings l JOIN listing_categories lc ON l.id = lc."listingId" JOIN categories c ON lc."categoryId" = c.id;');
   res.json(result.rows);
 });
 
