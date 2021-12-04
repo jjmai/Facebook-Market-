@@ -141,6 +141,12 @@ paths:
       description: Returns all listings
       tags:
         - Listing
+      parameters:
+        - name: categoryId
+          in: query
+          description: the id of category
+          schema:
+            type: number
       responses:
         200:
           description: Listing Response

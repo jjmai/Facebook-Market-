@@ -45,8 +45,8 @@ const SearchCategory = styled.div`
 
 const SearchItem = styled.div`
   display: flex;
-  color: rgba(0, 0, 0, 0.87);
-  background-color: #e4e6ea;
+  color: ${(prop) => prop.active ? '#1a77f2' : 'rgba(0, 0, 0, 0.87)'};
+  background-color: ${(prop) => prop.active ? '#e7f3ff' : '#e4e6ea'};
   border-radius: 18px;
   padding: 6px 10px;
   font-weight: bold;
@@ -129,12 +129,16 @@ const DrawerHeader = muiStyled('div')(({theme}) => ({
  *
  * @return {object} JSX
  */
-export default function SearchBar() {
+export default function SearchBar({
+  currentCategory,
+  setCurrentCategory,
+  currentSubCategory,
+  setCurrentSubCategory,
+}) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [categories, setCategories] = React.useState([]);
   const [subCategories, setSubCategories] = React.useState([]);
-  const [currentCategory, setCurrentCategory] = React.useState();
 
   React.useEffect(() => {
     fetch('/v0/categories')
@@ -170,12 +174,17 @@ export default function SearchBar() {
       })
       .then((json) => {
         setCurrentCategory(category);
+        setCurrentSubCategory(null);
         setSubCategories(json);
         setOpen(false);
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const onSubCategorySelect = (category) => {
+    setCurrentSubCategory(category);
   };
 
   return (
@@ -201,7 +210,14 @@ export default function SearchBar() {
               <SubCategoryWrapper>
                 {
                   subCategories.map((category) =>
-                    <SearchItem>{category.name}</SearchItem>)
+                    <SearchItem
+                      key={category.id}
+                      onClick={() => onSubCategorySelect(category)}
+                      active={currentSubCategory &&
+                      category.id === currentSubCategory.id}
+                    >
+                      {category.name}
+                    </SearchItem>)
                 }
               </SubCategoryWrapper>
             }

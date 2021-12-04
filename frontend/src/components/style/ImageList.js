@@ -10,11 +10,21 @@ import InfoIcon from '@mui/icons-material/Info';
  *
  * @return {object} JSX
  */
-export default function TitlebarImageList() {
+export default function TitlebarImageList({
+  currentCategory,
+  currentSubCategory,
+}) {
   const [listings, setListings] = React.useState([]);
 
   React.useEffect(() => {
-    fetch('/v0/listings')
+    let categoryId = '';
+    if (currentCategory && !currentSubCategory) {
+      categoryId = currentCategory.id;
+    } else if (currentCategory && currentSubCategory) {
+      categoryId = currentSubCategory.id;
+    }
+
+    fetch('/v0/listings' + (categoryId ? `?categoryId=${categoryId}` : ''))
       .then((res) => {
         if (!res.ok) {
           throw res;
@@ -27,7 +37,7 @@ export default function TitlebarImageList() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [currentCategory, currentSubCategory]);
 
   return (
     <ImageList style={{margin: 'auto'}}>

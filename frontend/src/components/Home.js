@@ -9,12 +9,23 @@ const HomeContent = styled.div`
 `;
 
 const Navbar = () => {
+  const [currentCategory, setCurrentCategory] = React.useState();
+  const [currentSubCategory, setCurrentSubCategory] = React.useState();
+
   return (
     <div>
       <Drawer />
       <HomeContent>
-        <SearchBar />
-        <ImageList />
+        <SearchBar
+          currentCategory={currentCategory}
+          setCurrentCategory={setCurrentCategory}
+          currentSubCategory={currentSubCategory}
+          setCurrentSubCategory={setCurrentSubCategory}
+        />
+        <ImageList
+          currentCategory={currentCategory}
+          currentSubCategory={currentSubCategory}
+        />
       </HomeContent>
     </div>
   );
