@@ -115,6 +115,20 @@ paths:
                 items:
                   $ref: '#/components/schemas/Category'
 
+  /listings:
+    get:
+      description: Returns all listings
+      tags:
+        - Listing
+      responses:
+        200:
+          description: Listing Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Listing'
+
 components:
   schemas:
     Error:
@@ -191,3 +205,17 @@ components:
         - name
         - filters
         - parent_id
+
+    Listing:
+      properties:
+        id:
+          type: number
+        created_by:
+          type: string
+        create_date:
+          type: string
+          format: date
+        text:
+          type: string
+        image_link:
+          type: string
