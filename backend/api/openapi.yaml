@@ -147,6 +147,11 @@ paths:
           description: the id of category
           schema:
             type: number
+        - name: userId
+          in: query
+          description: the id of user
+          schema:
+            type: number
       responses:
         200:
           description: Listing Response
@@ -155,6 +160,30 @@ paths:
               schema:
                 items:
                   $ref: '#/components/schemas/Listing'
+    post:
+      description: Create a new listings
+      tags:
+        - Listing
+      requestBody:
+        description: Listing to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateListing'
+      responses:
+        200:
+          description: Listing response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Listing'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 
 components:
   schemas:
@@ -234,15 +263,36 @@ components:
         - parent_id
 
     Listing:
+      required:
+        - id
+        - create_date
+        - created_by
+        - text
+        - image_link
       properties:
         id:
           type: number
-        created_by:
-          type: string
         create_date:
           type: string
           format: date
+        created_by:
+          type: number
         text:
           type: string
         image_link:
           type: string
+    CreateListing:
+      required:
+        - created_by
+        - text
+        - image_link
+        - category
+      properties:
+        created_by:
+          type: number
+        text:
+          type: string
+        image_link:
+          type: string
+        category:
+          type: number

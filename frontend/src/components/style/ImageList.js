@@ -51,7 +51,7 @@ export default function TitlebarImageList({
           />
           <ImageListItemBar
             title={listing.text}
-            subtitle={listing.created_by}
+            subtitle={listing.name}
             actionIcon={
               <IconButton
                 sx={{color: 'rgba(255, 255, 255, 0.54)'}}

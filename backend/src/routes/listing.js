@@ -12,15 +12,19 @@ const pool = new Pool({
 });
 
 router.get('/', async (req, res, next) => {
-  const { categoryId } = req.query;
+  const { categoryId, userId } = req.query;
   let params = [];
 
   let sql = `
     SELECT * FROM listings l 
       JOIN listing_categories lc ON l.id = lc."listingId"
       JOIN categories c ON lc."categoryId" = c.id
+      JOIN users u ON l.created_by = u.id
   `
-  if (categoryId) {
+  if (userId) {
+    sql += ` WHERE l.created_by = $1`;
+    params = [userId];
+  } else if (categoryId) {
     sql += `
       WHERE
         lc."categoryId" = $1
@@ -35,6 +39,18 @@ router.get('/', async (req, res, next) => {
   }
   const result = await pool.query(sql, params);
   res.json(result.rows);
+});
+
+router.post('/', async (req, res, next) => {
+  const listing = req.body;
+  const { created_by, text, image_link, category } = listing;
+
+  const createResult = await pool.query('INSERT INTO listings(created_by, create_date, text, image_link) values($1, $2, $3, $4) RETURNING *', [created_by, new Date(), text, image_link]);
+  const id = createResult.rows[0].id;
+  await pool.query('INSERT INTO listing_categories("categoryId", "listingId") values($1, $2)', [category, id]);
+  listing.id = id;
+  listing.create_date = createResult.rows[0].create_date;
+  res.json(listing);
 });
 
 module.exports = router;

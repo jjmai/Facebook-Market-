@@ -4,26 +4,7 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import styled from '@emotion/styled';
 import {Button} from '@mui/material';
-
-const Bar = styled.div`
-  position: fixed;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  height: 60px;
-  padding: 12px 16px;
-  background-color: #ffffff;
-  z-index: 999;
-`;
-
-const DrawerTitle = styled.h2`
-  color: #1a77f2;
-  margin: 0;
-`;
-
-const CustomButton = styled(Button)({
-  textTransform: 'initial',
-});
+import Header from './Header';
 
 const TopWrapper = styled.div`
   background-color: #c7b3f7;
@@ -46,7 +27,6 @@ const TopWrapperActions = styled.div`
   margin-top: 20px;
 `;
 
-
 /**
  * @return {object} JSX Table
  * @param {object} props hello
@@ -55,15 +35,7 @@ function ResponsiveDrawer(props) {
   return (
     <Box sx={{display: 'flex', flexDirection: 'column'}}>
       <CssBaseline />
-      <Bar>
-        <DrawerTitle>facebook</DrawerTitle>
-        <CustomButton
-          href='/login'
-          variant="contained"
-          disableElevation>
-          Log in
-        </CustomButton>
-      </Bar>
+      <Header />
       <TopWrapper>
         <h3 style={{margin: '0'}}>Buy and sell items locally or have
           something new shipped from stores.</h3>
