@@ -8,6 +8,7 @@ const OpenApiValidator = require('express-openapi-validator');
 
 const dummy = require('./dummy');
 const userRouter = require('./routes/user');
+const categoryRouter = require('./routes/category');
 
 const app = express();
 app.use(cors());
@@ -29,6 +30,7 @@ app.use(
 
 app.get('/v0/dummy', dummy.get);
 app.use('/v0/users', userRouter);
+app.use('/v0/categories', categoryRouter);
 // Your routes go here
 
 app.use((err, req, res, next) => {

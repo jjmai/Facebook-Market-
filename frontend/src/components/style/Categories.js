@@ -50,6 +50,23 @@ export default function PersistentDrawerRight() {
   const [open, setOpen] = React.useState(false);
   const [display, setDisplay] = React.useState(false);
   const [label, setLabel] = React.useState('');
+  const [categories, setCategories] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch('/v0/categories')
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
+      .then((json) => {
+        setCategories(json);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -103,16 +120,13 @@ export default function PersistentDrawerRight() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Vehicles', 'Apparel', 'Property Rentals',
-            'Electronics', 'Classifieds', 'Entertainment', 'Family',
-            'Free Stuff', 'Garden & Outdoor', 'Hobbies', 'Home Goods',
-            'Home Improvement Supplies', 'Home Sales', 'Musical Instruments',
-          ].map((text, index) => (
-            <ListItem button key={text} onClick={() => displayCategory(text)}>
+          {categories.map((category, index) => (
+            <ListItem button key={category.id}
+                      onClick={() => displayCategory(category.name)}>
               <ListItemIcon>
                 {iconArray[index]}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={category.name} />
             </ListItem>
           ))}
         </List>
