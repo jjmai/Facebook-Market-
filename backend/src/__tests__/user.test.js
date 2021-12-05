@@ -40,7 +40,7 @@ describe('create user', () => {
       .send(user)
       .set('Accept', 'application/json')
       .expect(200);
-    expect(response.body.id).toBeDefined()
+    expect(response.body.id).toBeDefined();
     expect(response.body.name).toEqual(user.name);
     expect(response.body.email).toEqual(user.email);
     expect(response.body.password).toBeUndefined();
@@ -63,7 +63,7 @@ describe('create user', () => {
 describe('authenticate user', () => {
   test('authenticate user with unexpected properties', async () => {
     const user = {
-      email: 'test not exist'
+      email: 'test not exist',
     };
     await request
       .post('/v0/users/authenticate')

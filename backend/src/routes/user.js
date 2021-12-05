@@ -1,7 +1,7 @@
 const express = require('express');
 const {Pool} = require('pg');
 const bcrypt = require('bcrypt');
-
+// eslint-disable-next-line
 const router = express.Router();
 
 const pool = new Pool({

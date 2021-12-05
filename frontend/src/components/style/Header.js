@@ -49,7 +49,7 @@ function Header() {
   const [user, setUser] = useState();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const history = useHistory();
-  const localtion = useLocation();
+  const location = useLocation();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -66,8 +66,8 @@ function Header() {
     if (storedUser) {
       storedUser = JSON.parse(storedUser);
       setUser(storedUser);
-    } else {
-      console.log(localtion);
+    } else if (location.pathname !== '/') {
+      history.push('/');
     }
   }, []);
 

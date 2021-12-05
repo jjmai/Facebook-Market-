@@ -1,6 +1,6 @@
 const express = require('express');
 const {Pool} = require('pg');
-
+// eslint-disable-next-line
 const router = express.Router();
 
 const pool = new Pool({
@@ -58,8 +58,8 @@ router.post('/', async (req, res, next) => {
     created_by: createdBy,
     text,
     category,
-    image_link: imageLink
-  }
+    image_link: imageLink,
+  };
   res.json(respListing);
 });
 

@@ -22,8 +22,8 @@ describe('listing test', () => {
       createdBy: 2,
       text: 'test',
       imageLink: 'http://picture1.com',
-      category: 2
-    }
+      category: 2,
+    };
     const response = await request
       .post('/v0/listings')
       .send(listing)
