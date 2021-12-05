@@ -32,7 +32,7 @@ const ContentWrapper = styled.div`
  */
 function NewListing() {
   const [listing, setListing] = React.useState({
-    text: '', image_link: '', category: '',
+    text: '', imageLink: '', category: '',
   });
   const [categories, setCategories] = React.useState([]);
   const history = useHistory();
@@ -60,7 +60,7 @@ function NewListing() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    if (!listing.text || !listing.image_link || !listing.category) {
+    if (!listing.text || !listing.imageLink || !listing.category) {
       return;
     }
 
@@ -68,7 +68,7 @@ function NewListing() {
     user = JSON.parse(user);
     fetch('/v0/listings', {
       method: 'POST',
-      body: JSON.stringify({...listing, created_by: user.id}),
+      body: JSON.stringify({...listing, createdBy: user.id}),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -109,7 +109,7 @@ function NewListing() {
               fullWidth
               label="Image URL"
               type="text"
-              name="image_link"
+              name="imageLink"
               variant="outlined"
               onChange={handleInputChange}
             />

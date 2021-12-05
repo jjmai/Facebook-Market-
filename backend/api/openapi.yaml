@@ -48,7 +48,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserWithoutPassword'
         400:
           description: Unexpected properties
         407:
@@ -283,16 +283,16 @@ components:
           type: string
     CreateListing:
       required:
-        - created_by
+        - createdBy
         - text
-        - image_link
+        - imageLink
         - category
       properties:
-        created_by:
+        createdBy:
           type: number
         text:
           type: string
-        image_link:
+        imageLink:
           type: string
         category:
           type: number

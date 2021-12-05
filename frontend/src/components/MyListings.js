@@ -31,7 +31,7 @@ function MyListings() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [userId]);
 
   return (
     <Box sx={{display: 'flex', flexDirection: 'column'}}>

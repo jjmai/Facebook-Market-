@@ -14,12 +14,9 @@ const pool = new Pool({
 
 router.post('/authenticate', async (req, res, next) => {
   const user = req.body;
-  if (!user.email || !user.password) {
-    res.status(400).send();
-    return;
-  }
 
-  const findResult = await pool.query('SELECT * FROM users WHERE email = $1', [user.email]);
+  const findResult = await pool.query(
+    'SELECT * FROM users WHERE email = $1', [user.email]);
   if (findResult.rowCount > 0) {
     const findUser = findResult.rows[0];
     if (bcrypt.compareSync(user.password, findUser.password)) {
@@ -36,12 +33,9 @@ router.post('/authenticate', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   const user = req.body;
-  if (!user.name || !user.email || !user.password) {
-    res.status(400).send();
-    return;
-  }
 
-  const findResult = await pool.query('SELECT * FROM users WHERE email = $1', [user.email]);
+  const findResult = await pool.query(
+    'SELECT * FROM users WHERE email = $1', [user.email]);
   if (findResult.rowCount > 0) {
     res.status(403).send();
     return;
@@ -49,9 +43,11 @@ router.post('/', async (req, res, next) => {
 
   const salt = bcrypt.genSaltSync(10);
   const hashPassword = bcrypt.hashSync( user.password, salt);
-  const createResult = await pool.query('INSERT INTO users(name, email, password) ' +
+  const createResult = await pool.query(
+    'INSERT INTO users(name, email, password) ' +
     'values($1, $2, $3) RETURNING *', [user.name, user.email, hashPassword]);
   user.id = createResult.rows[0].id;
+  delete user['password'];
   res.json(user);
 });
 
