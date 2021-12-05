@@ -225,7 +225,10 @@ export default function SearchBar({
           <SearchCategory>
             <SearchItem><Person /></SearchItem>
             <SearchItem>Sell</SearchItem>
-            <SearchItem onClick={handleDrawerOpen}>All Categories</SearchItem>
+            <SearchItem onClick={handleDrawerOpen}
+              data-testid="all_category">
+              All Categories
+            </SearchItem>
           </SearchCategory>
       }
       <CustomInputWrapper>
@@ -265,6 +268,7 @@ export default function SearchBar({
         variant="persistent"
         anchor="right"
         open={open}
+        data-testid="drawer"
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
@@ -273,7 +277,7 @@ export default function SearchBar({
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List data-testid="category_list">
           {categories.map((category, index) => (
             <ListItem button key={category.id}
               onClick={() => onCategorySelect(category)}>
