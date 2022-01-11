@@ -1,6 +1,1 @@
-CSE 183 Final Project
-
-Team members:
-    - Xinqiao Luo
-    - Jordan Mai
-    - Maxwell Mollison
+ # Simple Example of Facebok Market Place in Full Stack JS REACT
